@@ -266,7 +266,7 @@ if($acao!=""){
 
 		}
 
-		redirect('/','refresh');
+		redirect('/bills', 'refresh');
 
 	}
 
@@ -291,16 +291,21 @@ if($acao!=""){
 	$dupe['n_cedente']=$this->input->post('n_cedente');
 	$dupe['id_d_desp']=$this->input->post('d_desp');
 	$dupe['situacao']=$this->input->post('situacao');
+	$valorOri = $this->input->post('valor_ori');
+	$valorOri = str_replace(",",".",$valorOri);
+	$valorEfe = $this->input->post('valor_efe');
+ 	$valorEfe = str_replace(",",".",$valorEfe);
+
 	if($dupe['situacao']=="19"){
 		
-		$dupe['valor_ori']=$this->input->post('valor_ori') * $var; 
-		$dupe['valor_efe']=$this->input->post('valor_efe') * $var;
+		$dupe['valor_ori']=$valorOri * $var; 
+		$dupe['valor_efe']=$valorEfe * $var;
 		$pbill = $this->bancos_m->paybill($dupe['n_conta'],$dupe['valor_efe']);
 
 	}else{
 
-		$dupe['valor_ori']=$this->input->post('valor_ori'); 
-		$dupe['valor_efe']=$this->input->post('valor_efe');
+		$dupe['valor_ori']=$valorOri; 
+		$dupe['valor_efe']=$valorEfe;
 
 	}
 
@@ -361,18 +366,21 @@ redirect('/bills', 'refresh');
 		$dupe['n_cedente']=$this->input->post('n_cedente');
 		$dupe['id_d_desp']=$this->input->post('d_desp');
 		$dupe['situacao']=$this->input->post('situacao');
-
+		$valorOri = $this->input->post('valor_ori');
+		$valorOri = str_replace(",",".",$valorOri);
+		$valorEfe = $this->input->post('valor_efe');
+	 	$valorEfe = str_replace(",",".",$valorEfe);
 
 		if($dupe['situacao']=="19"){
 		
-			$dupe['valor_ori']=$this->input->post('valor_ori') * $var; 
-			$dupe['valor_efe']=$this->input->post('valor_efe') * $var;
+			$dupe['valor_ori']=$valorOri * $var; 
+			$dupe['valor_efe']=$valorEfe * $var;
 			$pbill = $this->bancos_m->paybill($dupe['n_conta'],$dupe['valor_efe']);
 
 		}else{
 
-			$dupe['valor_ori']=$this->input->post('valor_ori'); 
-			$dupe['valor_efe']=$this->input->post('valor_efe');
+			$dupe['valor_ori']=$valorOri; 
+			$dupe['valor_efe']=$valorEfe;
 
 		}
 
@@ -410,16 +418,20 @@ redirect('/bills', 'refresh');
 	$dupe['n_cedente']=$this->input->post('n_cedente');
 	$dupe['id_d_desp']=$this->input->post('d_desp');
 	$dupe['situacao']=$this->input->post('situacao');
+	$valorOri = $this->input->post('valor_ori');
+	$valorOri = str_replace(",",".",$valorOri);
+	$valorEfe = $this->input->post('valor_efe');
+ 	$valorEfe = str_replace(",",".",$valorEfe);
 	if($dupe['situacao']=="19"){
 		
-		$dupe['valor_ori']=$this->input->post('valor_ori') * $var; 
-		$dupe['valor_efe']=$this->input->post('valor_efe') * $var;
+		$dupe['valor_ori']=$valorOri * $var; 
+		$dupe['valor_efe']=$valorEfe * $var;
 		$pbill = $this->bancos_m->paybill($dupe['n_conta'],$dupe['valor_efe']);
 
 	}else{
 
-		$dupe['valor_ori']=$this->input->post('valor_ori'); 
-		$dupe['valor_efe']=$this->input->post('valor_efe');
+		$dupe['valor_ori']=$valorOri; 
+		$dupe['valor_efe']=$valorEfe;
 
 	}
 

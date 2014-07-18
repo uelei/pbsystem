@@ -3,7 +3,7 @@
 /**
 * Controler responsavel pela venda 
 */
-class Venda extends CI_Controller
+class Venda extends MY_Controller
 {
 	
 	function index(){

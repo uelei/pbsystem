@@ -7,6 +7,7 @@
 
 
 <script type="text/javascript" src="<?=base_url();?>js/jquery-1.9.1.js"> </script>
+<script type="text/javascript" src="<?=base_url();?>js/moneyFormatBR.js"> </script>
 <script type="text/javascript" src="<?=base_url()?>js/jquery-ui-1.10.3.custom.js"></script>
 <script type="text/javascript" >
   
@@ -109,12 +110,12 @@ n documento :</label>
 
 <div class="row top-b" >
   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ><label>valor original : </label>
-<input type="text"  value="" class="form-control" name="valor_ori" >  
+<input type="text"  value="" class="form-control" id="valor_ori" name="valor_ori" >  
 
 </div>
   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ><label>
 valor final : </label>
-<input type="text"  value="" class="form-control" name="valor_efe" ></div>
+<input type="text"  value="" class="form-control" id="valor_efe" name="valor_efe" ></div>
   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" > </div>
 
 
@@ -197,5 +198,4 @@ situacao :</label>
   <?php echo form_close(); ?>
 </div>
 </body>
-
 </html>
