@@ -1,0 +1,10 @@
+
+#menubar div { float:left; background: #CCFFCC; margin: 10px;  }
+
+#menubar{ 
+ position:absolute;
+ top:0;
+ right:0;
+ 
+ display: inline;
+}
