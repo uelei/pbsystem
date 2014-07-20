@@ -99,7 +99,7 @@ function barra () {
 function barra2 () {
   var t = 0.0;
   var daa = new google.visualization.DataTable();
-  daa.addColumn('string', 'Dias');
+  daa.addColumn('string', 'Mes');
   daa.addColumn('number', 'Sales');
 var d = $("#inputMes").val();
  var widm = document.getElementById('mchart').offsetWidth;
@@ -112,11 +112,11 @@ var d = $("#inputMes").val();
         daa.addRow([ obj[x].m, parseFloat(obj[x].ts) ]);
         }
 // var da = google.visualization.arrayToDataTable(dat);
-          var s = "Vendas do Mes : R$ "+ t.toFixed(2).toString();
+          var s = "Vendas do Ano : R$ "+ t.toFixed(2).toString();
         var options = {
           title: s,'width':widm,'height':widm*0.4,
           vAxis : {minValue: 0 },
-          hAxis: {title: 'Dias', titleTextStyle: {color: 'red'}}
+          hAxis: {title: 'Mes', titleTextStyle: {color: 'red'}}
         };
       var chars = new google.visualization.ColumnChart(document.getElementById('mchart')).draw(daa, options);
     });
