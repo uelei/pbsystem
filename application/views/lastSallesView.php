@@ -21,7 +21,7 @@
 				<?php foreach ($ultimasVendas as $uv) {
 					echo "<tr>";
 					echo "<td>";
-					echo $uv->order_id;
+					echo '<a href="http://pbs.piubol.com.br/index.php/venda/rv?rv='.$uv->order_id.'">'.$uv->order_id.'</a>';
 					echo "</td>";
 					echo "<td>";
 					echo $uv->affiliate_id;
