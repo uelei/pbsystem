@@ -51,7 +51,7 @@ class Venda extends MY_Controller
 		$codvend=$this->input->post('codvend');
 		$dt =implode("-",array_reverse(explode("/",$dat)));
 		$timen = date("H:i:s");                         // 17:16:17
-		$nv = array('store_id' =>"0" ,'date_added' =>$dt.$timen , "affiliate_id" => $codvend );
+		$nv = array('store_id' =>"0" ,'date_added' =>$dt." ".$timen , "affiliate_id" => $codvend );
 		$rv= $this->cv_m->criarnovavenda($nv);
 		echo $rv;
 	
@@ -223,12 +223,14 @@ $rv=$this->input->get_post('rv', TRUE);
 $qtd=$this->input->get_post('qtd', TRUE);
 $qtd= str_replace(",",".",$qtd);
 //$qtd= str_replace("-","",$qtd);
+//$dat = $this->input->get_post('dat',TRUE);
 
 $preco=$this->input->get_post('preco', TRUE);
 $preco= str_replace(",",".",$preco);
 
 $ttoal= $qtd * $preco;
 
+//$data = $dat." ".date("H:i:s");
 
 $this->load->model('cv_m');
 
