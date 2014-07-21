@@ -50,7 +50,8 @@ class Venda extends MY_Controller
 		$dat=$this->input->post('datarv');
 		$codvend=$this->input->post('codvend');
 		$dt =implode("-",array_reverse(explode("/",$dat)));
-		$nv = array('store_id' =>"0" ,'date_added' =>$dt." 00:00:00" , "affiliate_id" => $codvend );
+		$timen = date("H:i:s");                         // 17:16:17
+		$nv = array('store_id' =>"0" ,'date_added' =>$dt.$timen , "affiliate_id" => $codvend );
 		$rv= $this->cv_m->criarnovavenda($nv);
 		echo $rv;
 	
