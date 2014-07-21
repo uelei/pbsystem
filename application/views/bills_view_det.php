@@ -48,7 +48,7 @@
 <div class="row top-b">
   <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
     <label for="im" >im :</label>
-    <input type="text"  value="<?php echo $iddup->im; ?>" name="im" size="3" class="form-control" disabled ></div>
+    <input type="text"  value="<?php echo $iddup->im; ?>" name="im" size="3" class="form-control" readonly ></div>
   <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"></div>
 </div>
 
@@ -91,7 +91,7 @@ tipo de documento :
   
 <label>
 n documento :</label>
- <input type="text" value="" class="form-control" name="n_doc" >
+ <input type="text" class="form-control" value="<?php echo $iddup->n_doc; ?>" name="n_doc" >
 </div>
 </div>
 
@@ -182,12 +182,10 @@ echo form_dropdown('situacao', $status,$iddup->situacao ,'class="form-control"')
 
   <div class="row top-b bot-b">
     <div class="col-md-12">
-    <button class="btn btn-default bta"  >SALVAR</button>
-    <button class="btn btn-default bta"  >SALVAR+DEBITAR</button>
-<button  class="btn btn-default bta"  >SALVARNOVO</button>
+    <button class="btn btn-default bta" <?php if($iddup->situacao == "19"){echo "disabled";} ?> >SALVAR</button>
+    <button class="btn btn-default bta" <?php if($iddup->situacao == "19"){echo "disabled";} ?>  >SALVAR+DEBITAR</button>
+    <button  class="btn btn-default bta"  >SALVARNOVO</button>
     <button  class="btn btn-default bta" id="svn1" >SALVARNOVO+1</button>
- 
-    <button  class="btn btn-default bta"  <?php if($iddup->situacao == "19"){echo "disabled";} ?> id="bt_pay"  >PAGAR</button>
     <button class="btn btn-default bta" >DELETE</button>
 
 

@@ -334,12 +334,13 @@ redirect('/bills', 'refresh');
 		$dupe['situacao']=$this->input->post('situacao');
 		$dupe['valor_ori']=$this->input->post('valor_ori'); 
 		$dupe['valor_efe']=$this->input->post('valor_efe');
-	
+		
 		$addduplicata = $this->bills_m->updateconta($dupe,$im);
 
 		$lid= $this->db->insert_id();
 
-		redirect('/bills', 'refresh');
+		echo($lid);
+		// redirect('/bills', 'refresh');
 
 
 	}
