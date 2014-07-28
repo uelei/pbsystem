@@ -182,10 +182,10 @@ echo form_dropdown('situacao', $status,$iddup->situacao ,'class="form-control"')
 
   <div class="row top-b bot-b">
     <div class="col-md-12">
-    <button class="btn btn-default bta" <?php if($iddup->situacao == "19"){echo "disabled";} ?> >SALVAR</button>
+    <button class="btn btn-default bta" >SALVAR</button>
     <button class="btn btn-default bta" <?php if($iddup->situacao == "19"){echo "disabled";} ?>  >SALVAR+DEBITAR</button>
-    <button  class="btn btn-default bta"  >SALVARNOVO</button>
-    <button  class="btn btn-default bta" id="svn1" >SALVARNOVO+1</button>
+    <button  class="btn btn-default bta" <?php if($iddup->situacao == "19"){echo "disabled";} ?>  >SALVARNOVO</button>
+    <button  class="btn btn-default bta" id="svn1" <?php if($iddup->situacao == "19"){echo "disabled";} ?>  >SALVARNOVO+1</button>
     <button class="btn btn-default bta" >DELETE</button>
 
 

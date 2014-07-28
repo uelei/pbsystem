@@ -512,16 +512,28 @@ GROUP BY YEAR(date_added),MONTH(date_added)*/
 
 function socksreportsun($dai,$daf,$meias)
 {
+
+
+
 	$re  = array();
 	# magic 
 	foreach ($meias as $socks) {
 		# code...
 	
-		$sql ="SELECT SUM(quantity) AS sq , SUM(total) AS st 
+	if(strcmp($dai,$daf)==0){
+
+	$sql ="SELECT SUM(quantity) AS sq , SUM(total) AS st 
+		FROM `oc_order_product` 
+		WHERE order_id IN (
+			SELECT order_id FROM `oc_order` WHERE date_added LIKE '$dai%'
+			) AND product_id = '$socks';";
+	}else { 
+	$sql ="SELECT SUM(quantity) AS sq , SUM(total) AS st 
 		FROM `oc_order_product` 
 		WHERE order_id IN (
 			SELECT order_id FROM `oc_order` WHERE date_added >= '$dai' AND date_added <= '$daf'
 			) AND product_id = '$socks';";
+}
 
 
 
