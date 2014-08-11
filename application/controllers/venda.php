@@ -50,8 +50,17 @@ class Venda extends MY_Controller
 		$dat=$this->input->post('datarv');
 		$codvend=$this->input->post('codvend');
 		$dt =implode("-",array_reverse(explode("/",$dat)));
+		$ip = $_SERVER["REMOTE_ADDR"]; 
+
+		if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $fip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		}else{ $fip = "not defined";}
+
+		$b = $_SERVER['HTTP_USER_AGENT']; 
+		$al = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+
 		$timen = date("H:i:s");                         // 17:16:17
-		$nv = array('store_id' =>"0" ,'date_added' =>$dt." ".$timen , "affiliate_id" => $codvend );
+		$nv = array('store_id' =>"0" ,'invoice_prefix' => "loja-" , 'store_name'=>"piubol" , 'store_url' => "http://pbs.piubol.com.br" ,'customer_id'=> "2",'customer_group_id' =>"2", 'firstname' => "cliente",'lastname' => "balcao", 'email' => "balcao@piubol.com.br",'telephone'=> "32156181",'payment_firstname'=>"cliente", 'payment_lastname'=>"balcao",'payment_address_1'=>"rua",'payment_city'=>"juiz de fora",'payment_postcode'=>"36013260",'payment_country'=>"Brazil",'payment_country_id'=>"30",'payment_zone'=>"Minas Gerais",'payment_zone_id'=>"452",'payment_method'=>"pagamento na loja",'payment_code'=>"cash",'shipping_firstname'=>"cliente",'shipping_lastname'=>"balcao",'shipping_address_1'=>"rua",'shipping_city'=>"juiz de fora",'shipping_postcode'=>"36013260",'shipping_country'=>"Brazil",'shipping_country_id'=>"30",'shipping_zone'=>"Minas Gerais",'shipping_zone_id'=>"452",'shipping_method'=>"entrege diretamente ao cliente",'shipping_code'=>"mao.mao",'language_id' => "2" , 'currency_id' => "4" , 'currency_code' => "BRL" ,'currency_value'=>"1.0" ,'ip'=> $ip ,'forwarded_ip'=> $fip , 'user_agent'=> $b ,'accept_language' => $al  ,'date_added' =>$dt." ".$timen ,'date_modified' =>$dt." ".$timen , "affiliate_id" => $codvend );
 		$rv= $this->cv_m->criarnovavenda($nv);
 		echo $rv;
 	
@@ -419,10 +428,10 @@ function fechafim()
 	# code...
 	$rv= $this->input->get_post('rv',TRUE);
 	$status = $this->input->get_post('status',TRUE);
-
+	$totals = $this->input->get_post('total',TRUE);
 	$this->load->model('cv_m');
 
-	$this->cv_m->uprvstatus($rv,$status);
+	$this->cv_m->uprvstatus($rv,$status,$totals);
 
 	return TRUE;
 

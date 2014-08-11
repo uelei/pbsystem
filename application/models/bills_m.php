@@ -13,7 +13,8 @@ class Bills_m extends CI_Model
 		INNER JOIN oc_order_status ON money_control.situacao = oc_order_status.order_status_id 
 		INNER JOIN tb_t_doc ON money_control.tipo_doc = tb_t_doc.id_t_doc  
 		WHERE money_control.data_venc >= '$data' and money_control.data_venc <= '$intervalo' OR money_control.data_efe >= '$data' and money_control.data_efe <= '$intervalo' 
-		ORDER BY money_control.data_venc ASC; ";
+		GROUP BY  `money_control`.`im` 
+ORDER BY  `money_control`.`im` ASC  ";
 		$listacontas = $this->db->query($sql);
 		if ($listacontas->num_rows() > 0){
 			return $listacontas->result();
@@ -32,6 +33,7 @@ class Bills_m extends CI_Model
 		INNER JOIN oc_order_status ON money_control.situacao = oc_order_status.order_status_id 
 		INNER JOIN tb_t_doc ON money_control.tipo_doc = tb_t_doc.id_t_doc  
 		WHERE money_control.data_venc >= '$data' and money_control.data_venc <= '$intervalo' and tipo_doc ='14' and situacao !='19'   OR money_control.data_efe >= '$data' and money_control.data_efe <= '$intervalo'  and tipo_doc ='14' and situacao !='19' 
+		GROUP BY  `money_control`.`im` 
 		ORDER BY money_control.data_venc ASC; ";
 		$listacontas = $this->db->query($sql);
 		if ($listacontas->num_rows() > 0){

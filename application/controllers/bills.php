@@ -144,7 +144,6 @@ function datafind(){
 			$dat['pg']= FALSE;
 			$status['status'] = " ";
 			$this->load->view('bills_view',$dat);
-
 			$this->load->view('bancos_view',$bancos);
 			//$this->load->view('status_view',$status);
 
@@ -339,7 +338,7 @@ redirect('/bills', 'refresh');
 
 		$lid= $this->db->insert_id();
 
-		echo($lid);
+		//echo($lid);
 		// redirect('/bills', 'refresh');
 
 

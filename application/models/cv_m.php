@@ -149,15 +149,25 @@ $this->db->update('oc_order',$data);
 
 }
 
-public function uprvstatus($rv,$status)
+public function uprvstatus($rv,$status,$totals)
 {
 	
 
 
-$data = array('order_status_id' => $status,);
+$data = array('order_status_id' => $status);
 $this->db->where('order_id',$rv);
 $this->db->update('oc_order',$data); 
 
+$ta = str_replace('.', ',', $totals);
+$t = "$".$ta;
+
+$datat = array(
+   'order_id' => $rv ,
+   'code' => 'Total' ,
+   'title'=>'Total','text'=> $t ,'value'=> $totals ,'sort_order'=> '9'
+);
+
+$this->db->insert('oc_order_total', $datat); 
 
 
 }
@@ -454,17 +464,58 @@ public function somavendasd($value)
 // INNER JOIN usuario ON oc_order.affiliate_id = usuario.id_user
 // WHERE MONTH(date_added) = ".$value." AND order_status_id ='5'
 // GROUP BY `affiliate_id`";
+	$at = 0.0;
+$sqlavg = "SELECT SUM(x.ts)/count(*) AS avgt  FROM ( SELECT DAY(date_added), SUM(total) AS ts
+FROM oc_order WHERE date_added LIKE  '".$value."%' GROUP BY DAY( date_added )) x"; 
+$q = $this->db->query($sqlavg);
+if ($q->num_rows() > 0)
+{
+   foreach ($q->result() as $r)
+   {
+      $at =   number_format($r->avgt, 2, '.', '');
+
+   }
+}
 
 
 
+
+
+
+$a = array();
 $sql = "SELECT  DAY( date_added ) AS day , SUM( total ) AS ts
 FROM oc_order WHERE date_added LIKE  '".$value."%' 
 GROUP BY DAY( date_added ) 
 ORDER BY DAY( date_added ) ASC ";
 $vendas = $this->db->query($sql);
 	if($vendas->num_rows()>0){
-		$result = $vendas->result_array();
-		return json_encode($result);
+$i = 0;
+foreach ($vendas->result_array() as $row)
+{ 
+
+ $a[$i]['day'] = $row['day'];
+ $a[$i]['ts']= $row['ts'];
+ $a[$i]['avg']= $at;
+$i++;
+// 	array_push($a, 'day'=>$row['day'], 'total'=> $row['total']);
+// 	// $a['day' = $row['day'], 'total' = $row['total'], 'avg' = $at];
+// // 	$arrayName = array('' => , );
+// // array_push(a, var)
+
+
+//    // echo $row['title'];
+//    // echo $row['name'];
+//    // echo $row['body'];
+}
+
+	// $result = $vendas->result_array();
+
+		// $temp = json_decode($json);
+		// $temp[] = new data, whatever you want to add...;
+		// $json = json_encode($temp);
+
+
+		return json_encode($a);
 	}else { return '[{"affiliate_id":"0","username":"-","ts":"0"}]';}
 
 

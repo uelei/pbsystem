@@ -122,9 +122,10 @@ var datarv = $("#datarv").val();
   //var datah = datar[2]+"-"+datar[1]+"-"+datar[0];
 var nvar = $("#n_rv").val();
 
+var totals = parseFloat($('#total').val().replace(",",".")).toFixed(2);
 
 
-$.post( "http://pbs.piubol.com.br/index.php/venda/fechafim", { rv : nvar , status : "5" })
+$.post( "http://pbs.piubol.com.br/index.php/venda/fechafim", { rv : nvar , status : "5" ,total : totals})
 .done(function(){
 
 

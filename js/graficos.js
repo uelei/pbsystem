@@ -60,27 +60,35 @@ function gera2 () {
 
 function barra () {
   var t = 0.0;
+
   var da = new google.visualization.DataTable();
   da.addColumn('string', 'Dias');
   da.addColumn('number', 'Sales');
+  da.addColumn('number','Medio' )
   var d = $("#inputMes").val();
   var widd = document.getElementById('daychart').offsetWidth;
   $.post( "http://pbs.piubol.com.br/index.php/venda/dadosdograficovendasd", { inputmes : d })
     .done(function(dat){
-       var  obj = jQuery.parseJSON(dat);
+       var  obj = jQuery.parseJSON(dat);   // keys(obj).lengthvar data = /* your parsed JSON here */
+//wvar numberOfElements = data.food.length;
       for(x in obj){
         t = t+ parseFloat(obj[x].ts);
         //addiciona dados ao grafico 
-        da.addRow([ obj[x].day, parseFloat(obj[x].ts) ]);  
+        da.addRow([ obj[x].day, parseFloat(obj[x].ts), parseFloat(obj[x].avg) ]);   
         }
 // var da = google.visualization.arrayToDataTable(dat);
           var s = "Vendas do Mes : R$ "+ t.toFixed(2).toString();
         var options = {
           title: s,'width':widd,'height':widd*0.4,
           vAxis : {minValue: 0 },
+           seriesType: "bars",
+    series: {1: {type: "line"}},
           hAxis: {title: 'Dias', titleTextStyle: {color: 'red'}}
         };
-      var chartt = new google.visualization.ColumnChart(document.getElementById('daychart')).draw(da, options);
+      var chartt = new google.visualization.ComboChart(document.getElementById('daychart')).draw(da, options);
+      // var avg = t/i;
+      // $("#averageday").html("<h3>Valor medio das vendas por dia: "+avg.toFixed(2)+"</h3>");
+
     });
 
 }
