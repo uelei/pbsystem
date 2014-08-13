@@ -13,7 +13,7 @@ function gera () {
       for(x in obj){
         t = t+ parseFloat(obj[x].ts);
         //addiciona dados ao grafico 
-        data.addRow([ obj[x].username, parseFloat(obj[x].ts) ]);
+        data.addRow([ obj[x].firstname, parseFloat(obj[x].ts) ]);
       }
       var s = "Total das Vendas : R$ "+ t.toFixed(2).toString();
       var options = {'title':s,is3D: true,'width':wid,'height':wid};
@@ -42,7 +42,7 @@ function gera2 () {
       for(x in obj){
         t = t+ parseFloat(obj[x].ts);
         //addiciona dados ao grafico 
-        datames.addRow([ obj[x].username, parseFloat(obj[x].ts) ]);
+        datames.addRow([ obj[x].firstname, parseFloat(obj[x].ts) ]);
       }
       var s = "Total das Vendas no Mes : R$ "+ t.toFixed(2).toString();
       var options = {'title':s,is3D: true,'width': widc,'height':widc};
@@ -64,7 +64,7 @@ function barra () {
   var da = new google.visualization.DataTable();
   da.addColumn('string', 'Dias');
   da.addColumn('number', 'Sales');
-  da.addColumn('number','Medio' )
+  da.addColumn('number','Medio' );
   var d = $("#inputMes").val();
   var widd = document.getElementById('daychart').offsetWidth;
   $.post( "http://pbs.piubol.com.br/index.php/venda/dadosdograficovendasd", { inputmes : d })
@@ -87,7 +87,7 @@ function barra () {
         };
       var chartt = new google.visualization.ComboChart(document.getElementById('daychart')).draw(da, options);
       // var avg = t/i;
-      // $("#averageday").html("<h3>Valor medio das vendas por dia: "+avg.toFixed(2)+"</h3>");
+      //$("#averageday").html("<h3>Valor medio das vendas por dia: "+avg.toFixed(2)+"</h3>");
 
     });
 
@@ -109,6 +109,7 @@ function barra2 () {
   var daa = new google.visualization.DataTable();
   daa.addColumn('string', 'Mes');
   daa.addColumn('number', 'Sales');
+    daa.addColumn('number','Medio' );
 var d = $("#inputMes").val();
  var widm = document.getElementById('mchart').offsetWidth;
   $.post( "http://pbs.piubol.com.br/index.php/venda/dadosdograficovendasm", { inputmes : d })
@@ -117,16 +118,20 @@ var d = $("#inputMes").val();
       for(x in obj){
         t = t+ parseFloat(obj[x].ts);
         //addiciona dados ao grafico 
-        daa.addRow([ obj[x].m, parseFloat(obj[x].ts) ]);
+        daa.addRow([ obj[x].m, parseFloat(obj[x].ts) , parseFloat(obj[x].avg) ]);
         }
+              // $("#averageday").html("<h3>Valor medio das vendas por dia: "+dados+"</h3>");
+
 // var da = google.visualization.arrayToDataTable(dat);
           var s = "Vendas do Ano : R$ "+ t.toFixed(2).toString();
         var options = {
           title: s,'width':widm,'height':widm*0.4,
           vAxis : {minValue: 0 },
+          seriesType: "bars",
+    series: {1: {type: "line"}},
           hAxis: {title: 'Mes', titleTextStyle: {color: 'red'}}
         };
-      var chars = new google.visualization.ColumnChart(document.getElementById('mchart')).draw(daa, options);
+      var chars = new google.visualization.ComboChart(document.getElementById('mchart')).draw(daa, options);
     });
 
 }

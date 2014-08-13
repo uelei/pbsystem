@@ -21,7 +21,7 @@ $p=$user['password'];
 $eu = $this->users->autentica($u,$p);
 if($eu){
 
-$userlogged = array('id_user' => $eu->id_user,'username' => $eu->username, 'nivel' => $eu->nivel, 'loggedin'=> TRUE	 );
+$userlogged = array('id_user' => $eu->user_id,'username' => $eu->username, 'nivel' => '9', 'loggedin'=> TRUE	 );
 $this->session->set_userdata($userlogged);
 
 redirect('master', 'refresh');

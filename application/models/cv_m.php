@@ -13,13 +13,13 @@ public function checksaler($codvend)
 	$vend = preg_replace("/[^a-zA-Z0-9]+/", "", $codvend);
 
 
-	$sql ="SELECT * FROM usuario WHERE  id_user= '$vend' OR sigla ='$vend';";
+	$sql ="SELECT * FROM oc_affiliate WHERE  code= '$vend' OR lastname LIKE '$vend';";
 		$vend = $this->db->query($sql);
 		if ($vend->num_rows() > 0){
 
 			$row = $vend->row(); 
 
-   			return $row->id_user;
+   			return $row->code;
 
 			///return $detale_dup->row();
 		}
@@ -398,10 +398,10 @@ public function somavendasm($value)
 // WHERE MONTH(date_added) = ".$value." AND order_status_id ='5'
 // GROUP BY `affiliate_id`";	
 
-$sql = "SELECT `affiliate_id`,usuario.username,SUM(total) AS ts FROM `oc_order`  
-INNER JOIN usuario ON oc_order.affiliate_id = usuario.id_user
-WHERE date_added LIKE '%".$value."%' AND order_status_id ='5'
-GROUP BY `affiliate_id`";
+$sql = "SELECT oc_order.affiliate_id,af.firstname,SUM(total) AS ts 
+FROM `oc_order`  
+INNER JOIN oc_affiliate AS af ON oc_order.affiliate_id = af.affiliate_id
+WHERE oc_order.date_added LIKE '%".$value."%' AND order_status_id ='5' GROUP BY oc_order.affiliate_id";
 $vendas = $this->db->query($sql);
 	if($vendas->num_rows()>0){
 		$result = $vendas->result_array();
@@ -410,46 +410,42 @@ $vendas = $this->db->query($sql);
 
 
 }
-
-
-public function somavendasmmm($value)
-{
-// 	$sql = "SELECT `affiliate_id`,SUM(total),usuario.username FROM `oc_order`  
-// INNER JOIN usuario ON oc_order.affiliate_id = usuario.id_user
-// WHERE MONTH(date_added) = ".$value." AND order_status_id ='5'
-// GROUP BY `affiliate_id`";	
-
-$sql = "SELECT `affiliate_id`,usuario.username,SUM(total) AS ts FROM `oc_order`  
-INNER JOIN usuario ON oc_order.affiliate_id = usuario.id_user
-WHERE date_added LIKE '%".$value."%' AND order_status_id ='5'
-GROUP BY `affiliate_id`";
-$vendas = $this->db->query($sql);
-	if($vendas->num_rows()>0){
-		$result = $vendas->result_array();
-		return json_encode($result);
-	}else { return '[{"affiliate_id":"0","username":"-","ts":"0"}]';}
-
-
-}
-
 
 public function somavendasmm($value)
 {
-// 	$sql = "SELECT `affiliate_id`,SUM(total),usuario.username FROM `oc_order`  
-// INNER JOIN usuario ON oc_order.affiliate_id = usuario.id_user
-// WHERE MONTH(date_added) = ".$value." AND order_status_id ='5'
-// GROUP BY `affiliate_id`";
 
+	$at = 0.0;
+	$sqlavg = "SELECT SUM(x.ts)/count(*) AS avgt  FROM ( SELECT date_added,SUM(total) AS ts
+	FROM oc_order WHERE date_added LIKE  '".$value."%' GROUP BY MONTH( date_added ) ) x"; 
+	$q = $this->db->query($sqlavg);
+	if ($q->num_rows() > 0)
+	{
+	   foreach ($q->result() as $r)
+	   {
+	      $at =   number_format($r->avgt, 2, '.', '');
 
+	   }
+	}	
 
-$sql = "SELECT  MONTHNAME(date_added ) AS m , SUM( total ) AS ts
-FROM oc_order WHERE date_added LIKE  '".$value."%' 
-GROUP BY MONTH( date_added ) 
-ORDER BY MONTH( date_added ) ASC ";
-$vendas = $this->db->query($sql);
-	if($vendas->num_rows()>0){
-		$result = $vendas->result_array();
-		return json_encode($result);
+	$a = array();
+	$sql = "SELECT  MONTHNAME(date_added ) AS m , SUM( total ) AS ts
+	FROM oc_order WHERE date_added LIKE  '".$value."%' 
+	GROUP BY MONTH( date_added ) 
+	ORDER BY MONTH( date_added ) ASC";
+	$vendas = $this->db->query($sql);
+		if($vendas->num_rows()>0){
+	$i = 0;
+	foreach ($vendas->result_array() as $row)
+	{ 
+
+	 $a[$i]['m'] = $row['m'];
+	 $a[$i]['ts']= $row['ts'];
+	 $a[$i]['avg']= $at;
+	$i++;
+
+	}
+
+	return json_encode($a);
 	}else { return '[{"affiliate_id":"0","username":"-","ts":"0"}]';}
 
 
@@ -460,64 +456,42 @@ $vendas = $this->db->query($sql);
 
 public function somavendasd($value)
 {
-// 	$sql = "SELECT `affiliate_id`,SUM(total),usuario.username FROM `oc_order`  
-// INNER JOIN usuario ON oc_order.affiliate_id = usuario.id_user
-// WHERE MONTH(date_added) = ".$value." AND order_status_id ='5'
-// GROUP BY `affiliate_id`";
+
 	$at = 0.0;
-$sqlavg = "SELECT SUM(x.ts)/count(*) AS avgt  FROM ( SELECT DAY(date_added), SUM(total) AS ts
-FROM oc_order WHERE date_added LIKE  '".$value."%' GROUP BY DAY( date_added )) x"; 
-$q = $this->db->query($sqlavg);
-if ($q->num_rows() > 0)
-{
-   foreach ($q->result() as $r)
-   {
-      $at =   number_format($r->avgt, 2, '.', '');
+	$sqlavg = "SELECT SUM(x.ts)/count(*) AS avgt  FROM ( SELECT DAY(date_added), SUM(total) AS ts
+	FROM oc_order WHERE date_added LIKE  '".$value."%' GROUP BY DAY( date_added )) x"; 
+	$q = $this->db->query($sqlavg);
+	if ($q->num_rows() > 0)
+	{
+	   foreach ($q->result() as $r)
+	   {
+	      $at =   number_format($r->avgt, 2, '.', '');
 
-   }
-}
-
-
+	   }
+	}
 
 
 
+	$a = array();
+	$sql = "SELECT  DAY( date_added ) AS day , SUM( total ) AS ts
+	FROM oc_order WHERE date_added LIKE  '".$value."%' 
+	GROUP BY DAY( date_added ) 
+	ORDER BY DAY( date_added ) ASC ";
+	$vendas = $this->db->query($sql);
+		if($vendas->num_rows()>0){
+	$i = 0;
+	foreach ($vendas->result_array() as $row)
+	{ 
 
-$a = array();
-$sql = "SELECT  DAY( date_added ) AS day , SUM( total ) AS ts
-FROM oc_order WHERE date_added LIKE  '".$value."%' 
-GROUP BY DAY( date_added ) 
-ORDER BY DAY( date_added ) ASC ";
-$vendas = $this->db->query($sql);
-	if($vendas->num_rows()>0){
-$i = 0;
-foreach ($vendas->result_array() as $row)
-{ 
+	 $a[$i]['day'] = $row['day'];
+	 $a[$i]['ts']= $row['ts'];
+	 $a[$i]['avg']= $at;
+	$i++;
 
- $a[$i]['day'] = $row['day'];
- $a[$i]['ts']= $row['ts'];
- $a[$i]['avg']= $at;
-$i++;
-// 	array_push($a, 'day'=>$row['day'], 'total'=> $row['total']);
-// 	// $a['day' = $row['day'], 'total' = $row['total'], 'avg' = $at];
-// // 	$arrayName = array('' => , );
-// // array_push(a, var)
+	}
 
-
-//    // echo $row['title'];
-//    // echo $row['name'];
-//    // echo $row['body'];
-}
-
-	// $result = $vendas->result_array();
-
-		// $temp = json_decode($json);
-		// $temp[] = new data, whatever you want to add...;
-		// $json = json_encode($temp);
-
-
-		return json_encode($a);
+	return json_encode($a);
 	}else { return '[{"affiliate_id":"0","username":"-","ts":"0"}]';}
-
 
 }
 

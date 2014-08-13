@@ -6,23 +6,18 @@ class Users extends CI_Model
 	
 public function autentica($usuario,$senha){
 
-$consulta = $this->db->query("SELECT * FROM usuario WHERE username='$usuario' and password=md5('".$senha."');");
+$query = $this->db->query("SELECT salt FROM oc_user WHERE username = '".$usuario."';");
+$ret = $query->row();
+$s= $ret->salt;
+
+$has = sha1($s.sha1($s.sha1($senha)));
+
+$consulta = $this->db->query("SELECT * FROM oc_user  WHERE username='".$usuario."' and password='".$has."';");
+
 if ($consulta->num_rows() > 0)
 {
  $u = $consulta -> row();
-
-
-// $user_detale = array('username' => $u->username,'nivel'=> $u->nivel );
-
-
-
 	return $u;
-//	return $consulta
-//    foreach ($consulta->result() as $campos)
-//    {
-// $usuario_login  = array('id_user' => $campos->id_user, );
-//    }
-
 }
 
 return FALSE;

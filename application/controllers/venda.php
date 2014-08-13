@@ -593,7 +593,7 @@ function dadosdograficovendasmm()
 	$m = $this->input->get_post('inputmes');
 		$dd = explode("/",$m);
 	$data = $dd[2]."-".$dd[1];
-	$r = $this->cv_m->somavendasmmm($data);
+	$r = $this->cv_m->somavendasm($data);
 echo $r;
 }
 

@@ -329,17 +329,17 @@ redirect('/bills', 'refresh');
 		$dupe['parcela']=$this->input->post('parcela');
 		$dupe['n_conta']=$this->input->post('n_conta');
 		$dupe['n_cedente']=$this->input->post('n_cedente');
-		$dupe['id_d_desp']=$this->input->post('d_desp');
+		$dupe['id_d_desp']=$this->input->post('d_desp');//situacao
 		$dupe['situacao']=$this->input->post('situacao');
 		$dupe['valor_ori']=$this->input->post('valor_ori'); 
 		$dupe['valor_efe']=$this->input->post('valor_efe');
 		
 		$addduplicata = $this->bills_m->updateconta($dupe,$im);
 
-		$lid= $this->db->insert_id();
+		//$lid= $this->db->insert_id();
 
 		//echo($lid);
-		// redirect('/bills', 'refresh');
+	 	redirect('/bills', 'refresh');
 
 
 	}
