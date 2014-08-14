@@ -26,6 +26,9 @@ class Sessions extends CI_Controller
         if ($this->user->authenticate($user['email'], $user['password']))
         {
             $this->session->set_userdata('loggedin', true);
+            $cookie = TRUE;
+            $this->input->set_cookie($cookie);
+
         }
 
         redirect('/');
@@ -33,7 +36,9 @@ class Sessions extends CI_Controller
 
     function logout()
     {
+        $this->load->helper('cookie');
         $this->session->unset_userdata('loggedin');
+        delete_cookie("loggedin");
 
         redirect('/');
     }
