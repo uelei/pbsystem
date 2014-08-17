@@ -416,7 +416,7 @@ public function somavendasmm($value)
 
 	$at = 0.0;
 	$sqlavg = "SELECT SUM(x.ts)/count(*) AS avgt  FROM ( SELECT date_added,SUM(total) AS ts
-	FROM oc_order WHERE date_added LIKE  '".$value."%' GROUP BY MONTH( date_added ) ) x"; 
+	FROM oc_order WHERE date_added LIKE  '".$value."%' AND order_status_id ='5' GROUP BY MONTH( date_added ) ) x"; 
 	$q = $this->db->query($sqlavg);
 	if ($q->num_rows() > 0)
 	{
@@ -429,7 +429,7 @@ public function somavendasmm($value)
 
 	$a = array();
 	$sql = "SELECT  MONTHNAME(date_added ) AS m , SUM( total ) AS ts
-	FROM oc_order WHERE date_added LIKE  '".$value."%' 
+	FROM oc_order WHERE date_added LIKE  '".$value."%' AND order_status_id ='5'
 	GROUP BY MONTH( date_added ) 
 	ORDER BY MONTH( date_added ) ASC";
 	$vendas = $this->db->query($sql);
@@ -459,7 +459,7 @@ public function somavendasd($value)
 
 	$at = 0.0;
 	$sqlavg = "SELECT SUM(x.ts)/count(*) AS avgt  FROM ( SELECT DAY(date_added), SUM(total) AS ts
-	FROM oc_order WHERE date_added LIKE  '".$value."%' GROUP BY DAY( date_added )) x"; 
+	FROM oc_order WHERE date_added LIKE  '".$value."%' AND order_status_id ='5' GROUP BY DAY( date_added )) x"; 
 	$q = $this->db->query($sqlavg);
 	if ($q->num_rows() > 0)
 	{
@@ -474,7 +474,7 @@ public function somavendasd($value)
 
 	$a = array();
 	$sql = "SELECT  DAY( date_added ) AS day , SUM( total ) AS ts
-	FROM oc_order WHERE date_added LIKE  '".$value."%' 
+	FROM oc_order WHERE date_added LIKE  '".$value."%' AND order_status_id ='5'
 	GROUP BY DAY( date_added ) 
 	ORDER BY DAY( date_added ) ASC ";
 	$vendas = $this->db->query($sql);
@@ -500,7 +500,7 @@ public function somavendasd($value)
 
 public function listaUltimasVendas()
 {
-	$sql ='SELECT order_id,affiliate_id,total,date_added FROM `oc_order` WHERE `order_status_id`=5 ORDER BY `oc_order`.`order_id` DESC LIMIT 5;';
+	$sql ="SELECT order_id,affiliate_id,total,date_added FROM `oc_order` WHERE `order_status_id`='5' ORDER BY `oc_order`.`order_id` DESC LIMIT 5;";
 	$ultimasVendas = $this->db->query($sql);
 	if ($ultimasVendas->num_rows()>0){
 		$result= $ultimasVendas->result();

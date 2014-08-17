@@ -13,7 +13,7 @@ class MY_Controller extends CI_Controller
         //delete_cookie("name");
 //$this->input->cookie('some_data', TRUE);
 
-        if (!$this->session->userdata('loggedin') && !$this->input->cookie("loggedin",TRUE))
+        if (!$this->session->userdata('loggedin') || $this->input->cookie("loggedin",TRUE))
         {
             redirect('login');
         }

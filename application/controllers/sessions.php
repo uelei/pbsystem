@@ -26,7 +26,7 @@ class Sessions extends CI_Controller
         if ($this->user->authenticate($user['email'], $user['password']))
         {
             $this->session->set_userdata('loggedin', true);
-            $cookie = TRUE;
+            $cookie = "loggedin";
             $this->input->set_cookie($cookie);
 
         }
