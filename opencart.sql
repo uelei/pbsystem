@@ -2106,7 +2106,9 @@ CREATE TABLE `oc_order` (
 --
 -- Dumping data for table `oc_order`
 --
-
+-- example ---->>>---------------
+INSERT INTO `oc_user` (`user_id`, `user_group_id`, `username`, `password`, `salt`, `firstname`, `lastname`, `email`, `image`, `code`, `ip`, `status`, `date_added`) VALUES 
+(1, 1, 'admin', 'dcde893a4142aa89d2a8b6b121455a6ded0e9024', 'e60a29310', 'admin', 'Admin', 'Admin@admin.com', '', '', '', 1, '2014-09-05 12:58:44');
 -- --------------------------------------------------------
 
 --

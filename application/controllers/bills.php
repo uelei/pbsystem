@@ -229,7 +229,6 @@ if($acao!=""){
 
 	$this->load->model('status_m');
 	$dados['status'] = $this->status_m->getallstatus();
-
 	$this->load->model('d_desp_m');
 	$dados['d_desp']= $this->d_desp_m->getallddesp();
 
@@ -241,6 +240,28 @@ if($acao!=""){
 
 		$dados['iddup']= $this->bills_m->detale_dup($dup);
 		$this->load->view('bills_view_det',$dados);
+
+
+
+//	$valorOri = $this->input->post('valor_ori');
+//	$valorOri = str_replace(",",".",$valorOri);
+//	$valorEfe = $this->input->post('valor_efe');
+ //	$valorEfe = str_replace(",",".",$valorEfe);
+
+//		$dupe['valor_ori']=$valorOri;
+//		$dupe['valor_efe']=$valorEfe;
+
+
+
+
+
+
+
+
+
+
+
+
 
 	}
 
@@ -330,9 +351,18 @@ redirect('/bills', 'refresh');
 		$dupe['n_conta']=$this->input->post('n_conta');
 		$dupe['n_cedente']=$this->input->post('n_cedente');
 		$dupe['id_d_desp']=$this->input->post('d_desp');//situacao
+	$valorOri = $this->input->post('valor_ori');
+	$valorOri = str_replace(",",".",$valorOri);
+	$valorEfe = $this->input->post('valor_efe');
+ 	$valorEfe = str_replace(",",".",$valorEfe);
+
+		$dupe['valor_ori']=$valorOri;
+		$dupe['valor_efe']=$valorEfe;
+
 		$dupe['situacao']=$this->input->post('situacao');
-		$dupe['valor_ori']=$this->input->post('valor_ori'); 
-		$dupe['valor_efe']=$this->input->post('valor_efe');
+
+//		$dupe['valor_ori']=$this->input->post('valor_ori'); 
+//		$dupe['valor_efe']=$this->input->post('valor_efe');
 		
 		$addduplicata = $this->bills_m->updateconta($dupe,$im);
 
@@ -419,6 +449,7 @@ redirect('/bills', 'refresh');
 	$dupe['id_d_desp']=$this->input->post('d_desp');
 	$dupe['situacao']=$this->input->post('situacao');
 	$valorOri = $this->input->post('valor_ori');
+
 	$valorOri = str_replace(",",".",$valorOri);
 	$valorEfe = $this->input->post('valor_efe');
  	$valorEfe = str_replace(",",".",$valorEfe);
