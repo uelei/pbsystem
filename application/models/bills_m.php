@@ -14,7 +14,7 @@ class Bills_m extends CI_Model
 		INNER JOIN tb_t_doc ON money_control.tipo_doc = tb_t_doc.id_t_doc  
 		WHERE money_control.data_venc >= '$data' and money_control.data_venc <= '$intervalo' OR money_control.data_efe >= '$data' and money_control.data_efe <= '$intervalo' 
 		GROUP BY  `money_control`.`im` 
-ORDER BY  `money_control`.`im` ASC  ";
+		ORDER BY  `money_control`.`data_venc` ASC ; ";
 		$listacontas = $this->db->query($sql);
 		if ($listacontas->num_rows() > 0){
 			return $listacontas->result();
