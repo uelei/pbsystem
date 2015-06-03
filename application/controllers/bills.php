@@ -804,10 +804,6 @@ if($upduplicata){
 
 
 $this->load->library('email');
-
-$this->email->from('ueleiww@gmail.com', 'uelei');
-$this->email->to('uelei.8c1ae0e@m.evernote.com'); 
-
 $this->email->subject('Email Test');
 $this->email->message('Testing the email class.');	
 
